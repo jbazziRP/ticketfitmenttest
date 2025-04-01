@@ -1,0 +1,17 @@
+models:
+  - name: dc_catalog
+    description: "DC catalog model containing part fitment data, including images for parts."
+    columns:
+      - name: image_url
+        description: "URL for part images. This field is crucial for assessing fitment coverage."
+        tests:
+          - coverage_fitment:
+              model: ref('dc_catalog')
+              column_name: image_url
+              coverage_threshold: 80  # Test fails if less than 80% of parts have images
+              severity: "fail"  # Options: "warn" (logs a warning) or "fail" (stops execution)
+
+    meta:
+      owner: "data-team@example.com"
+      last_updated: "auto"
+      tags: ["coverage_analysis", "data_quality", "dbt_test"]
